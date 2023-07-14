@@ -2,4 +2,4 @@
 Data Loss Prevention for openSUSE
 
 
-![Rango](./static/rango2.png)
+![Rango](./static/rango3.jpg)
