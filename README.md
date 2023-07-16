@@ -22,6 +22,7 @@ This software is a modular DLP (Data Loss Prevention) for Linux, which was desig
 rango --encrypt /tmp/Koosha
 ```
 
+**sort**
 
 Sort Files in Given Directory
 
