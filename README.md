@@ -14,6 +14,8 @@ This software is a modular DLP (Data Loss Prevention) for Linux, which was desig
 ## Manual
 
 ----------------------------------------------------------
+----------------------------------------------------------
+
 ### Encrypt
 
 *rango --encrypt DIRECTORY or rango -E DIRECTORY*
@@ -24,6 +26,8 @@ rango --encrypt /tmp/Koosha
 ```
 
 ----------------------------------------------------------
+----------------------------------------------------------
+
 ### Sort
 
 **Sort Files in Given Directory**
@@ -34,6 +38,7 @@ rango --encrypt /tmp/Koosha
 rango --sort /home/$USER/Desktop
 ```
 
+----------------------------------------------------------
 ----------------------------------------------------------
 
 ### Scan
@@ -50,6 +55,8 @@ rango --scan --full
 rango -SS -F
 ```
 ----------------------------------------------------------
+*Directory Scan : Scan Given Directory*
+
 ```
 rango --scan --dir /home/$USER/Downloads
 ```
@@ -59,6 +66,9 @@ rango --scan --dir /home/$USER/Downloads
 rango -SS -D /home/$USER/Downloads
 ```
 ----------------------------------------------------------
+
+*Scan RootKit*
+
 ```
 rango --scan --rootkit
 ```
@@ -74,6 +84,7 @@ rango --scan --vul
 rango -SS -VUL
 ```
 
+----------------------------------------------------------
 ----------------------------------------------------------
 
 ### FireWall
