@@ -7,27 +7,49 @@ import encrypt
 import sort
 import scan
 import firewall
+import manual
+
+
 
 if sys.argv[0] == "./rango":
-    if sys.argv[1] == "--encrypt" or sys.argv[1] == "-e":
+    if sys.argv[1] == "--encrypt" or sys.argv[1] == "-E":
         encrypt.encrypt_file()
         encrypt.encrypt_files_in_directory()
         print("All Files Encrypted [ OK ]")
-    elif sys.argv[1] == "--sort" or sys.argv[1] == "-s":
+    elif sys.argv[1] == "--sort" or sys.argv[1] == "-S":
         sort.sort_files()
 
-    elif sys.argv[1] == "--scan" : 
-        if sys.argv[2] == "--full":
+    elif sys.argv[1] == "--scan" or sys.argv[1] == "-SS":
+        if sys.argv[2] == "--full" or sys.argv[2] == "-F":
             scan.full_clamav()
-        elif sys.argv[2] == "--dir":
+        elif sys.argv[2] == "--dir" or sys.argv[2] == "-D":
             scan.dir_clamav()
-        elif sys.argv[2] == "--rootkit":
+        elif sys.argv[2] == "--rootkit" or sys.argv[2] == "-RK":
             scan.rkhunter()
-        elif sys.argv[2] == "--vul":
+        elif sys.argv[2] == "--vul" or sys.argv[2] == "-VUL":
             scan.vul_check()
-    elif sys.argv[1] == "--firewall":
-        if sys.argv[2] == "--webserver":
+        else:
+            print("check Manual of scan Switch")
+    elif sys.argv[1] == "--firewall" or sys.argv[1] == "-FW":
+        if sys.argv[2] == "--webserver" or sys.argv[2] == "-WB":
             firewall.set_webserver_firewall()
-        elif sys.argv[2] == "--check":
+        elif sys.argv[2] == "--check" or sys.argv[2] == "-C":
             firewall.show_firewall_config()
-    
+        else:
+            print("check Firewall switches and Try Again")
+    elif sys.argv[1] == "--help" or sys.argv[1] == "-H":
+        manual.help()
+        if sys.argv[2] == "--scan" or sys.argv[2] == "-SS":
+            manual.scan_help()
+        elif sys.argv[2] == "--encrypt" or sys.argv[2] == "-E" :
+            manual.encrypt_help()
+        elif sys.argv[2] == "--sort" or sys.argv[2] == "-S" :
+            manual.sort_help()
+        elif sys.argv[2] == "--firewall" or sys.argv[2] == "-FW" :
+            manual.firewall_help()
+        elif sys.argv[2] == "--all" or sys.argv[2] == "-A":
+            manual.all()
+
+    else:
+        print("command Not Valid!!!")
+

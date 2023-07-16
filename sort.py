@@ -1,13 +1,12 @@
 import glob
 import os
+import sys
 
 
-
+directory_path = sys.argv[2]
 
 def sort_files():
     # Specify the directory path where the files are located
-    directory_path = sys.argv[2]
-
     # Use glob to find all files in the directory
     files = glob.glob(os.path.join(directory_path, "*"))
 
