@@ -1,0 +1,33 @@
+#!/usr/bin/python
+
+
+import os
+import sys
+import encrypt
+import sort
+import scan
+import firewall
+
+if sys.argv[0] == "./rango":
+    if sys.argv[1] == "--encrypt" or sys.argv[1] == "-e":
+        encrypt.encrypt_file()
+        encrypt.encrypt_files_in_directory()
+        print("All Files Encrypted [ OK ]")
+    elif sys.argv[1] == "--sort" or sys.argv[1] == "-s":
+        sort.sort_files()
+
+    elif sys.argv[1] == "--scan" : 
+        if sys.argv[2] == "--full":
+            scan.full_clamav()
+        elif sys.argv[2] == "--dir":
+            scan.dir_clamav()
+        elif sys.argv[2] == "--rootkit":
+            scan.rkhunter()
+        elif sys.argv[2] == "--vul":
+            scan.vul_check()
+    elif sys.argv[1] == "--firewall":
+        if sys.argv[2] == "--webserver":
+            firewall.set_webserver_firewall()
+        elif sys.argv[2] == "--check":
+            firewall.show_firewall_config()
+    
