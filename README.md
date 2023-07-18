@@ -112,6 +112,54 @@ rango -FW -C
 
  
 
+----------------------------------------------------------
+----------------------------------------------------------
+
+### Port Scaning
+
+show openports : 
+
+```
+rango --checkport --result
+```
+or
+
+```
+rango -CP -R
+```
+
+----------------------------------------------------------
+----------------------------------------------------------
+
+### Service
+
+list services : 
+
+```
+rango --service --list
+```
+
+start service
+
+```
+rango --service --start SERVICE_NAME
+```
+
+
+stop service
+
+```
+rango --service --stop SERVICE_NAME
+```
+
+
+restart service
+
+```
+rango --service --restart SERVICE_NAME
+```
+
+
 
 
 ## Install
