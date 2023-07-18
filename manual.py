@@ -52,6 +52,28 @@ def firewall_help():
     return " "
 
 
+def service_help():
+    print("Service")
+    print("\tService check : List Service and start & stop & restart Services")
+
+    print("\t\t➜  rango --service --list")
+    print("\t\t➜  rango --service start SERVICE_NAME")
+    print("\t\t➜  rango --service stop SERVICE_NAME")
+    print("\t\t➜  rango --service restart SERVICE_NAME")
+    return " "
+
+def port_help():
+    print("Port")
+    print("\tcheck Ports : check openports ")
+
+    print("\t\t➜  rango --checkport --result")
+    print("\t\t➜  rango -CP -R")
+    return " "
+
+
+
+
+
 def all():
     print(firewall_help())
     print(scan_help())
