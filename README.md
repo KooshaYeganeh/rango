@@ -176,3 +176,152 @@ wget https://github.com/KooshaYeganeh/rango/archive/refs/heads/main.zip && unzip
 sudo rm -rf /opt/rango && echo "1- Main Directort Removed" && sudo rm /usr/bin/rango && echo "Rango DLP Removed [ OK ]"
 ```
 
+
+## Other Tools
+
+
+### Install Zeek
+
+#### Fedora 37
+
+```
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/security:zeek/Fedora_37/security:zeek.repo && sudo dnf install zeek -y
+```
+
+#### Fedora38
+
+
+```
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/security:zeek/Fedora_38/security:zeek.repo && sudo dnf install zeek
+
+```
+
+```
+export PATH=$PATH:/opt/zeek/bin
+```
+
+### openSUSE 15.5
+
+```
+sudo zypper addrepo https://download.opensuse.org/repositories/security:zeek/15.5/security:zeek.repo
+zypper refresh
+sudo zypper install zeek -y
+```
+
+
+### UBuntu
+
+```
+echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list && curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null && sudo apt update && sudo apt install zeek-6.0
+```
+
+
+
+
+### Zeek Manual
+
+
+
+**1- Navigate to Zeek Configuration Directory:**
+
+
+```
+cd /opt/zeek/etc
+```
+
+**2- Copy the Default Configuration:**
+
+Copy the Default Configuration:
+
+
+**3- Edit local.zeek:**
+```
+sudo cp zeekctl.cfg local.zeek
+```
+
+> Edit local.zeek:
+
+
+```
+sudo vi local.zeek
+```
+
+
+**- Enable/Disable Protocols:**
+
+> Uncomment or comment out lines to enable or disable specific analyzers. For example, to enable HTTP and DNS analysis:
+
+```
+@load protocols/http
+@load protocols/dns
+```
+
+**- File Analysis Configuration:**
+
+Configure settings related to file analysis, such as enabling extraction of files. Uncomment or add lines like:
+
+```
+@load frameworks/files/extract-all-files
+```
+
+**- Logging Configuration:**
+
+Configure the log settings, including the log directory and log rotation policy. For example:
+
+```
+Log::default_rotation_interval = 1 day;
+Log::default_rotation_base_count = 2;
+```
+
+**- Capture Interfaces:**
+
+Specify the network interfaces to monitor. For example:
+
+```
+interface="eth0"
+```
+
+Save the changes.
+
+
+**4 - Restart Zeek:**
+
+> After making changes to the local.zeek file, restart Zeek to apply the new configuration:
+
+```
+zeekctl stop && zeekctl deploy && zeekctl start
+```
+
+> The zeekctl deploy command updates the configuration across the Zeek cluster.
+
+
+**5- Review Logs:**
+Zeek generates various log files in the logs directory. You can review these logs to verify that Zeek is capturing and analyzing network traffic according to your configuration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
