@@ -1,43 +1,64 @@
 import os
 import sys
 import subprocess
+from colorama import Fore, Back, Style, init
 
+# Initialize Colorama
+init(autoreset=True)
 
+def print_header(title):
+    print(Fore.GREEN + Style.BRIGHT + f"{title}")
+    print(Fore.GREEN + '-' * len(title))
+    print()
 
-def dir_clamav():
-    scan = os.popen("sudo clamscan --remove --recursive --infected {scan_path}").read()
+def print_footer(message, success=True):
+    if success:
+        print(Fore.GREEN + Style.BRIGHT + message)
+    else:
+        print(Fore.RED + Style.BRIGHT + message)
+    print()
+
+def dir_clamav(scan_path):
+    print_header(f"Scanning Directory with ClamAV: {scan_path}")
+    scan_command = f"sudo clamscan --remove --recursive --infected {scan_path}"
+    scan = os.popen(scan_command).read()
     print(scan)
-    return "clamav Scaneed Directory [ OK ]"
-
-
+    print_footer("ClamAV Scan Completed [ OK ]")
 
 def rkhunter():
-    scan = os.popen("sudo rkhunter --check").read()
-    result = subprocess.run(['rkhunter', '--check'], capture_output=True, text=True)
-    print("start Scan system with RootKitHunter")
+    print_header("Starting System Scan with RootKitHunter")
+    result = subprocess.run(['sudo', 'rkhunter', '--check'], capture_output=True, text=True)
     print(result.stdout)
-
+    
     if result.returncode == 0:
-        return "system Scanned with RootKitHunter [ OK ]"
+        print_footer("System Scanned with RootKitHunter [ OK ]")
     else:
-        return "RootKit Scan System [ ERROR ]"
-
-
+        print_footer("RootKit Scan System [ ERROR ]", success=False)
 
 def vul_check():
-    vul = os.popen("sudo lynis audit system").read()
+    print_header("Checking System Vulnerabilities with Lynis")
+    vul_command = "sudo lynis audit system"
+    vul = os.popen(vul_command).read()
     print(vul)
-    return "sysem Vulnerability check Done with ciscofy Lynis [ OK ]"
-
+    print_footer("System Vulnerability Check Done with Lynis [ OK ]")
 
 def full_clamav():
-    clamascan = os.popen("sudo clamscan --remove --infected --recursive /").read()
-    rkhunter = os.popen("sudo rkhunter -c").read()
-
-    print(clamscan)
+    print_header("Performing Full System Scan")
+    
+    clamascan_command = "sudo clamscan --remove --infected --recursive /"
+    rkhunter_command = "sudo rkhunter -c"
+    
+    print_header("ClamAV Scan in Progress")
+    clamascan = os.popen(clamascan_command).read()
+    print(clamascan)
+    
+    print_header("RootKitHunter Scan in Progress")
+    rkhunter = os.popen(rkhunter_command).read()
     print(rkhunter)
+    
+    print_header("Checking Vulnerabilities")
     print(vul_check())
-    return "Scanned Full system [ OK ]"
-
+    
+    print_footer("Full System Scan Completed [ OK ]")
 
 
