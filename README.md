@@ -1,178 +1,230 @@
 # Rango
 
-Data Loss Prevention For Linux
+Data Loss Prevention (DLP) for Linux
 
-![Rango](./static/rango3.jpg)
+![Rango](./static/python rango.py3.jpg)
 
+## Overview
 
-## INFO
+Rango is a modular Data Loss Prevention (DLP) tool designed for Linux systems, originally developed for use on SUSE operating systems. This tool provides functionalities for encryption, file sorting, system scanning, firewall configuration, port checking, and service management.
 
-This software is a modular DLP (Data Loss Prevention) for Linux, which was designed based on personal needs on the Suse operating system, that's why I chose this logo for the software:)
+## Features
 
+- **Encrypt Files**: Secure your files by encrypting them.
+- **Sort Files**: Organize files by their extension.
+- **Scan System**: Perform comprehensive security scans with ClamAV, RKHunter, and Lynis.
+- **Manage Firewall**: Configure firewall rules and check existing configurations.
+- **Check Ports**: Identify open ports on the system.
+- **Manage Services**: List, start, stop, and restart system services.
 
-
-## Manual
-
-----------------------------------------------------------
-----------------------------------------------------------
+## Commands and Options
 
 ### Encrypt
 
-*rango --encrypt DIRECTORY or rango -E DIRECTORY*
+Encrypt files within a specified directory.
 
+
+python rango.py --encrypt DIRECTORY
+python rango.py -E DIRECTORY
+
+
+
+**Example:**
 
 ```
-rango --encrypt /tmp/Koosha
+python rango.py --encrypt /tmp/Koosha
 ```
 
-----------------------------------------------------------
-----------------------------------------------------------
+
 
 ### Sort
 
-**Sort Files in Given Directory**
+Sort files in a specified directory by their extensions.
 
-*rango --sort DIRECTORY*
+python rango.py --sort DIRECTORY
+python rango.py -S DIRECTORY
 
-```
-rango --sort /home/$USER/Desktop
-```
 
-----------------------------------------------------------
-----------------------------------------------------------
+**Example:**
+
+python rango.py --sort /home/$USER/Desktop
+
 
 ### Scan
 
-*Full Scan : Full Scan of System with ClamAV and RKHunter and Lynis*
+Perform different types of scans on the system.
 
----------------------------------------------------------
-```
-rango --scan --full
-```
-**or**
-
-```
-rango -SS -F
-```
-----------------------------------------------------------
-*Directory Scan : Scan Given Directory*
-
-```
-rango --scan --dir /home/$USER/Downloads
-```
-**or**
-
-```
-rango -SS -D /home/$USER/Downloads
-```
-----------------------------------------------------------
-
-*Scan RootKit*
-
-```
-rango --scan --rootkit
-```
-**or**
-```
-rango -SS -RK
-```
-```
-rango --scan --vul
-```
-
-```
-rango -SS -VUL
-```
-
-----------------------------------------------------------
-----------------------------------------------------------
-
-### FireWall
-
-**WebServer :** add Firewall configs For WebServer Automatically
-
-```
-rango --firewall --webserver
-```
-or
-
-```
-rango -FW -WB
-```
-
-*check : check Firewall configs*
-
-```
-rango --firewal --check
-```
-
-```
-rango -FW -C
-```
-
- 
-
-----------------------------------------------------------
-----------------------------------------------------------
-
-### Port Scaning
-
-show openports : 
-
-```
-rango --checkport --result
-```
-or
-
-```
-rango -CP -R
-```
-
-----------------------------------------------------------
-----------------------------------------------------------
-
-### Service
-
-list services : 
-
-```
-rango --service --list
-```
-
-start service
-
-```
-rango --service --start SERVICE_NAME
-```
-
-
-stop service
-
-```
-rango --service --stop SERVICE_NAME
-```
-
-
-restart service
-
-```
-rango --service --restart SERVICE_NAME
-```
+- **Full System Scan**: Use ClamAV, RKHunter, and Lynis for a complete system scan.
 
 
 
 
-## Install
+### Scan
 
-```
-wget https://github.com/KooshaYeganeh/rango/archive/refs/heads/main.zip && unzip main.zip && echo "1- Main File unziped"  && mv rango-main rango && mv rango /opt && echo "2- Main Directory Moved to /opt " && cd /usr/bin && sudo ln -s /opt/rango/rango ./rango && echo "3- Created SoftLink From MainFile in /usr/bin" && echo "4- Rango DLP Installed Successfully [ OK ]"
+Perform different types of scans on the system.
+
+- **Full System Scan**: Use ClamAV, RKHunter, and Lynis for a complete system scan.
+
+
+python rango.py --scan --full
+python rango.py -SS -F
+
+
+
+- **Directory Scan**: Scan a specific directory.
+
+python rango.py --scan --dir /home/$USER/Downloads
+python rango.py -SS -D /home/$USER/Downloads
+
+
+- **RootKit Scan**: Check for rootkits.
+
+python rango.py --scan --rootkit
+python rango.py -SS -RK
+
+
+- **Vulnerability Scan**: Identify system vulnerabilities.
+
+python rango.py --scan --vul
+python rango.py -SS -VUL
+
+
+
+### Firewall
+
+Manage firewall settings and check configurations.
+
+- **WebServer Configuration**: Automatically add firewall rules for web servers.
+
+
+
+python rango.py --firewall --webserver
+python rango.py -FW -WB
+
+
+
+- **Check Firewall Configurations**: Review existing firewall rules.
+
+
+python rango.py --firewall --check
+python rango.py -FW -C
+
+
+
+
+### Port Scanning
+
+Check for open ports on the system.
+
+python rango.py --checkport --result
+python rango.py -CP -R
+
+
+
+
+### Service Management
+
+Manage system services: list, start, stop, and restart services.
+
+- **List Services**:
+
+
+
+python rango.py --service --list
+
+
+
+- **Start Service**:
+
+python rango.py --service --start SERVICE_NAME
+
+
+
+- **Stop Service**:
+
+python rango.py --service --stop SERVICE_NAME
+
+
+- **Restart Service**:
+
+python rango.py --service --restart SERVICE_NAME
+
+
+
+## Installation
+
+To install Rango, run the following commands:
+
+```bash
+wget https://github.com/KooshaYeganeh/python rango.py/archive/refs/heads/main.zip
+unzip main.zip
+echo "1- Main file unzipped"
+mv python rango.py-main python rango.py
+mv python rango.py /opt
+echo "2- Main directory moved to /opt"
+cd /usr/bin
+sudo ln -s /opt/python rango.py/python rango.py ./python rango.py
+echo "3- Created symbolic link in /usr/bin"
+echo "4- Rango DLP installed successfully [ OK ]"
 ```
 
+## Manual
+Help
+Display help and usage information.
 
-## Remove
 
 
-```
-sudo rm -rf /opt/rango && echo "1- Main Directort Removed" && sudo rm /usr/bin/rango && echo "Rango DLP Removed [ OK ]"
-```
+python rango.py --help
+python rango.py -H
+
+
+python rango.py --encrypt DIRECTORY
+python rango.py -E DIRECTORY
+
+
+python rango.py --sort DIRECTORY
+python rango.py -S DIRECTORY
+
+python rango.py --scan --full
+python rango.py -SS -F
+
+python rango.py --scan --dir /home/$USER/Downloads
+python rango.py -SS -D /home/$USER/Downloads
+
+
+python rango.py --scan --rootkit
+python rango.py -SS -RK
+
+
+python rango.py --scan --vul
+python rango.py -SS -VUL
+
+python rango.py --firewall --webserver
+python rango.py -FW -WB
+
+
+python rango.py --firewall --check
+python rango.py -FW -C
+
+
+python rango.py --checkport --result
+python rango.py -CP -R
+
+
+python rango.py --service --list
+
+
+python rango.py --service --start SERVICE_NAME
+
+
+python rango.py --service --stop SERVICE_NAME
+
+
+python rango.py --service --restart SERVICE_NAME
+
+
+
+
+
+
 

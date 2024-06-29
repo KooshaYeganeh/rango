@@ -4,16 +4,15 @@ import os
 import sys
 from cryptography.fernet import Fernet
 
-
-
 # Generate encryption key
 key = Fernet.generate_key()
 
-# Directory path containing the files to encrypt
-directory_path = sys.argv[2]
+def set_key(new_key):
+    global key
+    key = new_key
 
-
-
+def get_key():
+    return key
 
 def encrypt_file(file_path, key):
     with open(file_path, 'rb') as file:
@@ -31,9 +30,10 @@ def encrypt_files_in_directory(directory_path, key):
             file_path = os.path.join(root, file_name)
             encrypt_file(file_path, key)
 
-
-
-
-# Encrypt files in the directory
-encrypt_files_in_directory(directory_path, key)
-
+# Do not execute encryption when this file is imported
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        directory_path = sys.argv[1]
+        encrypt_files_in_directory(directory_path, key)
+    else:
+        print("No directory path provided.")

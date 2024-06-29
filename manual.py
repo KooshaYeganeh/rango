@@ -1,82 +1,77 @@
-import os
-import sys
+from colorama import Fore, Style, init
 
-
-print(" ========== Rango is Simple DLP (Data Loss Prevention) For Linux Users ==========")
-print(" ========== Manual or Help : show Help ==========")
-
-
+# Initialize Colorama
+init(autoreset=True)
 
 def help():
-    return("rango --help or -H")
-
-
+    print(f"{Fore.CYAN}Usage: {Style.BRIGHT}rango <command> [options]{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}Commands:{Style.RESET_ALL}")
+    print(f"  {Fore.GREEN}--encrypt, -E{Style.RESET_ALL}        {Fore.WHITE}Encrypt files in a directory{Style.RESET_ALL}")
+    print(f"  {Fore.GREEN}--sort, -S{Style.RESET_ALL}           {Fore.WHITE}Sort files in a directory{Style.RESET_ALL}")
+    print(f"  {Fore.GREEN}--scan, -SS{Style.RESET_ALL}          {Fore.WHITE}Scan options{Style.RESET_ALL}")
+    print(f"  {Fore.GREEN}--firewall, -FW{Style.RESET_ALL}      {Fore.WHITE}Firewall options{Style.RESET_ALL}")
+    print(f"  {Fore.GREEN}--checkport, -CP{Style.RESET_ALL}     {Fore.WHITE}Check open ports{Style.RESET_ALL}")
+    print(f"  {Fore.GREEN}--service{Style.RESET_ALL}            {Fore.WHITE}Service options{Style.RESET_ALL}")
+    print(f"  {Fore.GREEN}--monitor{Style.RESET_ALL}            {Fore.WHITE}Monitor options{Style.RESET_ALL}")
+    print(f"  {Fore.GREEN}--help, -H{Style.RESET_ALL}           {Fore.WHITE}Display this help message{Style.RESET_ALL}")
 
 def encrypt_help():
-    print("\tEncrypt")
-    print("rango --encrypt DIRECTORY or rango -E DIRECTORY")
-    print("\tExample : ➜  rango --encrypt /tmp/Koosha")
-    return " "
-
+    print(f"{Fore.MAGENTA}Encrypt{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}rango --encrypt DIRECTORY or rango -E DIRECTORY{Style.RESET_ALL}")
+    print(f"\t{Fore.WHITE}Example : ➜  rango --encrypt /tmp/Koosha{Style.RESET_ALL}")
 
 def sort_help():
-    print("Sort : Sort Files in Given Directory")
-    print("rango --sort DIRECTORY")
-    print("\tExample : ➜  rango --sort /home/koosha/Desktop")
-    return " "
-
-
+    print(f"{Fore.MAGENTA}Sort : Sort Files in Given Directory{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}rango --sort DIRECTORY{Style.RESET_ALL}")
+    print(f"\t{Fore.WHITE}Example : ➜  rango --sort /home/koosha/Desktop{Style.RESET_ALL}")
 
 def scan_help():
-    print("\tScan")
-    print("\tFull Scan : Full Scan of System with ClamAV and RKHunter and Lynis")
-    print("\t\t➜  rango --scan --full")
-    print("\t\t\trango -SS -F")
-    print("\t\t➜  rango --scan --dir /home/koosha/Downloads")
-    print("\t\t➜  rango -SS -D /home/koosha/Downloads")
-    print("\t\t➜  rango --scan --rootkit")
-    print("\t\t➜  rango -SS -RK")
-    print("\t\t➜  rango --scan --vul")
-    print("\t\t➜  rango -SS -VUL")
-    return " "
-
+    print(f"{Fore.MAGENTA}Scan{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}Full Scan : Full Scan of System with ClamAV and RKHunter and Lynis{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --scan --full{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango -SS -F{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --scan --dir /home/koosha/Downloads{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango -SS -D /home/koosha/Downloads{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --scan --rootkit{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango -SS -RK{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --scan --vul{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango -SS -VUL{Style.RESET_ALL}")
 
 def firewall_help():
-    print("FireWall")
-    print("\tWebServer : add Firewall configs For WebServer Automatically")
-    print("\t\t➜  rango --firewall --webserver")
-    print("\t\t➜  rango -FW -WB")
-    print("\tcheck : check Firewall configs")
-    print("\t\t➜  rango --firewal --check")
-    print("\t\t➜  rango -FW -C")
-    return " "
-
+    print(f"{Fore.MAGENTA}FireWall{Style.RESET_ALL}")
+    print(f"\t{Fore.YELLOW}WebServer : add Firewall configs For WebServer Automatically{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --firewall --webserver{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango -FW -WB{Style.RESET_ALL}")
+    print(f"\t{Fore.YELLOW}Check : check Firewall configs{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --firewal --check{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango -FW -C{Style.RESET_ALL}")
 
 def service_help():
-    print("Service")
-    print("\tService check : List Service and start & stop & restart Services")
-
-    print("\t\t➜  rango --service --list")
-    print("\t\t➜  rango --service start SERVICE_NAME")
-    print("\t\t➜  rango --service stop SERVICE_NAME")
-    print("\t\t➜  rango --service restart SERVICE_NAME")
-    return " "
+    print(f"{Fore.MAGENTA}Service{Style.RESET_ALL}")
+    print(f"\t{Fore.YELLOW}Service check : List Service and start & stop & restart Services{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --service --list{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --service start SERVICE_NAME{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --service stop SERVICE_NAME{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --service restart SERVICE_NAME{Style.RESET_ALL}")
 
 def port_help():
-    print("Port")
-    print("\tcheck Ports : check openports ")
-
-    print("\t\t➜  rango --checkport --result")
-    print("\t\t➜  rango -CP -R")
-    return " "
-
-
-
-
+    print(f"{Fore.MAGENTA}Port{Style.RESET_ALL}")
+    print(f"\t{Fore.YELLOW}Check Ports : check open ports{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --checkport --result{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango -CP -R{Style.RESET_ALL}")
 
 def all():
-    print(firewall_help())
-    print(scan_help())
-    print(sort_help())
-    print(encrypt_help())
-    return " " 
+    help()
+    print()
+    encrypt_help()
+    print()
+    sort_help()
+    print()
+    scan_help()
+    print()
+    firewall_help()
+    print()
+    service_help()
+    print()
+    port_help()
+

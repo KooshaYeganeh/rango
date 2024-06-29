@@ -1,12 +1,10 @@
+#!/usr/bin/python3
+
 import glob
 import os
 import sys
 
-
-directory_path = sys.argv[2]
-
-def sort_files():
-    # Specify the directory path where the files are located
+def sort_files(directory_path):
     # Use glob to find all files in the directory
     files = glob.glob(os.path.join(directory_path, "*"))
 
@@ -20,4 +18,13 @@ def sort_files():
 
         # Print the file name and extension
         print(f"File: {file} \t Type: {extension}")
-    return "all Files in Directory Sorted [ OK ]"
+    return "All Files in Directory Sorted [ OK ]"
+
+# Do not execute sorting when this file is imported
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        directory_path = sys.argv[1]
+        print(sort_files(directory_path))
+    else:
+        print("No directory path provided.")
+
