@@ -25,6 +25,23 @@ print_error() {
     echo -e "${RED}${message}${NC}"
 }
 
+# Function to display help message
+print_help() {
+    print_header "Usage: $0 [OPTIONS]"
+    echo
+    print_header "Options:"
+    echo -e "${YELLOW}--install [OPTION]${NC}       Install tools on the specified distribution"
+    echo -e "${YELLOW}--suse${NC}                  Install tools on openSUSE"
+    echo -e "${YELLOW}--redhat${NC}                Install tools on RedHat"
+    echo -e "${YELLOW}--debian${NC}                Install tools on Debian"
+    echo -e "${YELLOW}--app${NC}                   Install Python application"
+    echo -e "${YELLOW}--help${NC}                  Display this help message"
+    echo
+    print_header "Examples:"
+    echo -e "${BLUE}$0 --suse --app${NC}         Install tools on openSUSE and then the Python application"
+    echo -e "${BLUE}$0 --help${NC}              Display this help message"
+}
+
 # Function to install tools on openSUSE
 openSUSE() {
     print_header "Starting installation on openSUSE"
@@ -39,21 +56,6 @@ openSUSE() {
     
     print_progress "Installing fail2ban..."
     sudo zypper -n install fail2ban
-    
-    print_progress "Downloading chkrootkit..."
-    wget -q -c ftp://ftp.chkrootkit.org/pub/seg/pac/chkrootkit.tar.gz
-    tar -xzf chkrootkit.tar.gz
-    
-    print_progress "Setting up chkrootkit..."
-    sudo mkdir -p /usr/local/chkrootkit
-    sudo mv chkrootkit-0.58b/* /usr/local/chkrootkit
-    
-    cd /usr/local/chkrootkit || { print_error "Failed to change directory to /usr/local/chkrootkit"; exit 1; }
-    
-    print_progress "Compiling chkrootkit..."
-    sudo make
-    
-    cd || { print_error "Failed to return to home directory"; exit 1; }
     
     print_header "Installation on openSUSE completed successfully"
 }
@@ -124,27 +126,72 @@ debian() {
     print_header "Installation on Debian completed successfully"
 }
 
+# Function to install Python application
+main_installer() {
+    print_header "Starting Python application installation"
+
+    cd /tmp || { print_error "Failed to change directory to /tmp"; exit 1; }
+    
+    print_progress "Downloading python_rango.py repository..."
+    wget -q https://github.com/KooshaYeganeh/python_rango.py/archive/refs/heads/main.zip
+    
+    print_progress "Unzipping python_rango.py..."
+    unzip -q main.zip
+    
+    cd rango-main || { print_error "Failed to change directory to rango-main"; exit 1; }
+    
+    print_progress "Creating virtual environment..."
+    python3.11 -m venv venv
+    source venv/bin/activate
+    
+    print_progress "Installing requirements..."
+    pip install -r requirements.txt
+
+    print_header "Python application installation completed successfully"
+}
+
+# Function to handle installation based on arguments
+handle_install() {
+    case "$1" in
+        --suse)
+            openSUSE
+            ;;
+        --redhat)
+            redhat
+            ;;
+        --debian)
+            debian
+            ;;
+        *)
+            print_error "Invalid distribution. Please use --suse, --redhat, or --debian."
+            ;;
+    esac
+
+    if [[ "$2" == "--app" ]]; then
+        main_installer
+    fi
+}
+
 # Function to display menu and handle installation
 menu() {
     case "$1" in
         --install)
-            case "$2" in
-                --suse)
-                    openSUSE
-                    ;;
-                --redhat)
-                    redhat
-                    ;;
-                --debian)
-                    debian
-                    ;;
-                *)
-                    print_error "Invalid option for install. Please use --suse, --redhat, or --debian."
-                    ;;
-            esac
+            if [[ -z "$2" ]]; then
+                print_error "Error: Distribution option is required for --install"
+                print_help
+                exit 1
+            fi
+            handle_install "$2" "$3"
+            ;;
+        --app)
+            main_installer
+            ;;
+        --help)
+            print_help
             ;;
         *)
-            print_error "Usage: $0 --install [--suse | --redhat | --debian]"
+            print_error "Usage: $0 [OPTIONS]"
+            print_help
             ;;
     esac
 }

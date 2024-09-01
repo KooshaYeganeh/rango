@@ -6,3 +6,4 @@ packaging==24.1
 pycparser==2.22
 pyinstaller==6.8.0
 pyinstaller-hooks-contrib==2024.7
+termgraph==0.5.3

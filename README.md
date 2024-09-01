@@ -157,16 +157,17 @@ python rango.py --service --restart SERVICE_NAME
 To install Rango, run the following commands:
 
 ```bash
-wget https://github.com/KooshaYeganeh/python_rango.py/archive/refs/heads/main.zip
-unzip main.zip
-echo "1- Main file unzipped"
-mv python_rango.py-main python_rango.py
-mv python_rango.py /opt
-echo "2- Main directory moved to /opt"
-cd /usr/bin
-sudo ln -s /opt/python_rango.py/python_rango.py ./python_rango.py
-echo "3- Created symbolic link in /usr/bin"
-echo "4- Rango DLP installed successfully [ OK ]"
+./install --suse --app
+./install --redhat --app
+./install --debian --app
+```
+
+For Install Just Basic Tools : 
+
+```bash
+./install --suse 
+./install --redhat 
+./install --debian 
 ```
 
 ## Manual
@@ -204,8 +205,8 @@ python rango.py -SS -VUL
 python rango.py --firewall --webserver
 python rango.py -FW -WB
 
-python rango.py --firewall --check
-python rango.py -FW -C
+python rango.py --firewall --show
+python rango.py --add 'RULE'
 
 python rango.py --checkport --result
 python rango.py -CP -R

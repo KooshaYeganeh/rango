@@ -2,6 +2,7 @@ import os
 import sys
 from colorama import Fore, Back, Style, init
 import re
+import subprocess
 
 # Initialize Colorama
 init(autoreset=True)
@@ -39,6 +40,23 @@ def service():
     colored_s = colorize_output(s)
     print(colored_s)
     print_footer("Services Listed [ OK ]")
+
+def service_report():
+    print_header("Services Mini Report")
+
+    # Get service counts
+    total_services = int(os.popen("sudo systemctl list-units --type=service | wc -l").read().strip())
+    failed_services = int(os.popen("sudo systemctl list-units --type=service | grep 'failed' | wc -l").read().strip())
+    active_services = int(os.popen("sudo systemctl list-units --type=service | grep 'active' | wc -l").read().strip())
+    systemd_services = int(os.popen("sudo systemctl list-units --type=service | grep 'systemd' | wc -l").read().strip())
+
+    # Print the report
+    print(f"{Fore.CYAN}Total Services:{Fore.RESET} {total_services}")
+    print(f"{Fore.RED}Failed Services:{Fore.RESET} {failed_services}")
+    print(f"{Fore.GREEN}Active Services:{Fore.RESET} {active_services}")
+    print(f"{Fore.GREEN}systemd Services:{Fore.RESET} {systemd_services}")
+    
+
 
 def start_service():
     if len(sys.argv) < 4:

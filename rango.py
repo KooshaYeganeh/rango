@@ -100,6 +100,8 @@ def main():
         service_action = sys.argv[2]
         if service_action == "--list":
             checkservice.service()
+        elif service_action == "--report":
+            checkservice.service_report()
         elif service_action == "--start":
             if len(sys.argv) < 4:
                 print("Error: Service name is required for --service --start")

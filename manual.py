@@ -52,6 +52,7 @@ def service_help():
     print(f"{Fore.MAGENTA}Service{Style.RESET_ALL}")
     print(f"\t{Fore.YELLOW}Service check : List Service and start & stop & restart Services{Style.RESET_ALL}")
     print(f"\t{Fore.CYAN}➜  rango --service --list{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --service --report{Style.RESET_ALL}")
     print(f"\t{Fore.CYAN}➜  rango --service start SERVICE_NAME{Style.RESET_ALL}")
     print(f"\t{Fore.CYAN}➜  rango --service stop SERVICE_NAME{Style.RESET_ALL}")
     print(f"\t{Fore.CYAN}➜  rango --service restart SERVICE_NAME{Style.RESET_ALL}")
