@@ -70,8 +70,14 @@ def main():
         firewall_action = sys.argv[2]
         if firewall_action == "--webserver" or firewall_action == "-WB":
             firewall.set_webserver_firewall()
-        elif firewall_action == "--check" or firewall_action == "-C":
+        elif firewall_action == "--show" or firewall_action == "-SH":
             firewall.show_firewall_config()
+        elif firewall_action == "--add" or firewall_action == "-A":
+            if len(sys.argv) < 4:
+                print("Error: Firewall rule is required for --add")
+                sys.exit(1)
+            rule = sys.argv[3]
+            print(firewall.add_rule(rule))
         else:
             print("Invalid firewall action.")
             sys.exit(1)

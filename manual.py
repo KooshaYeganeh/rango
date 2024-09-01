@@ -36,15 +36,17 @@ def scan_help():
     print(f"\t{Fore.CYAN}➜  rango -SS -RK{Style.RESET_ALL}")
     print(f"\t{Fore.CYAN}➜  rango --scan --vul{Style.RESET_ALL}")
     print(f"\t{Fore.CYAN}➜  rango -SS -VUL{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --scan --vul --fail2ban{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango -SS -VUL -FB{Style.RESET_ALL}")
 
 def firewall_help():
-    print(f"{Fore.MAGENTA}FireWall{Style.RESET_ALL}")
+    print(f"{Fore.MAGENTA}FireWall(iptables){Style.RESET_ALL}")
     print(f"\t{Fore.YELLOW}WebServer : add Firewall configs For WebServer Automatically{Style.RESET_ALL}")
     print(f"\t{Fore.CYAN}➜  rango --firewall --webserver{Style.RESET_ALL}")
     print(f"\t{Fore.CYAN}➜  rango -FW -WB{Style.RESET_ALL}")
     print(f"\t{Fore.YELLOW}Check : check Firewall configs{Style.RESET_ALL}")
-    print(f"\t{Fore.CYAN}➜  rango --firewal --check{Style.RESET_ALL}")
-    print(f"\t{Fore.CYAN}➜  rango -FW -C{Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --show {Style.RESET_ALL}")
+    print(f"\t{Fore.CYAN}➜  rango --add 'RULE' {Style.RESET_ALL}")
 
 def service_help():
     print(f"{Fore.MAGENTA}Service{Style.RESET_ALL}")

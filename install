@@ -1,0 +1,153 @@
+#!/bin/bash
+
+# Define color codes for better UI
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Function to display header messages with color
+print_header() {
+    local message="$1"
+    echo -e "${GREEN}${message}${NC}"
+}
+
+# Function to display progress messages with color
+print_progress() {
+    local message="$1"
+    echo -e "${BLUE}${message}${NC}"
+}
+
+# Function to display error messages with color
+print_error() {
+    local message="$1"
+    echo -e "${RED}${message}${NC}"
+}
+
+# Function to install tools on openSUSE
+openSUSE() {
+    print_header "Starting installation on openSUSE"
+
+    cd /tmp || { print_error "Failed to change directory to /tmp"; exit 1; }
+    
+    print_progress "Downloading sa-1.0.0.noarch.rpm..."
+    wget -q https://github.com/KooshaYeganeh/sa/releases/download/v1.0.0/sa-1.0.0.noarch.rpm
+    
+    print_progress "Installing sa-1.0.0.noarch.rpm..."
+    sudo rpm -ivh sa-1.0.0.noarch.rpm
+    
+    print_progress "Installing fail2ban..."
+    sudo zypper -n install fail2ban
+    
+    print_progress "Downloading chkrootkit..."
+    wget -q -c ftp://ftp.chkrootkit.org/pub/seg/pac/chkrootkit.tar.gz
+    tar -xzf chkrootkit.tar.gz
+    
+    print_progress "Setting up chkrootkit..."
+    sudo mkdir -p /usr/local/chkrootkit
+    sudo mv chkrootkit-0.58b/* /usr/local/chkrootkit
+    
+    cd /usr/local/chkrootkit || { print_error "Failed to change directory to /usr/local/chkrootkit"; exit 1; }
+    
+    print_progress "Compiling chkrootkit..."
+    sudo make
+    
+    cd || { print_error "Failed to return to home directory"; exit 1; }
+    
+    print_header "Installation on openSUSE completed successfully"
+}
+
+# Function to install tools on RedHat
+redhat() {
+    print_header "Starting installation on RedHat"
+
+    cd /tmp || { print_error "Failed to change directory to /tmp"; exit 1; }
+    
+    print_progress "Downloading sa-1.0.0.noarch.rpm..."
+    wget -q https://github.com/KooshaYeganeh/sa/releases/download/v1.0.0/sa-1.0.0.noarch.rpm
+    
+    print_progress "Installing sa-1.0.0.noarch.rpm..."
+    sudo rpm -ivh sa-1.0.0.noarch.rpm
+    
+    print_progress "Installing fail2ban..."
+    sudo dnf -y install fail2ban
+    
+    print_progress "Downloading chkrootkit..."
+    wget -q -c ftp://ftp.chkrootkit.org/pub/seg/pac/chkrootkit.tar.gz
+    tar -xzf chkrootkit.tar.gz
+    
+    print_progress "Setting up chkrootkit..."
+    sudo mkdir -p /usr/local/chkrootkit
+    sudo mv chkrootkit-0.58b/* /usr/local/chkrootkit
+    
+    cd /usr/local/chkrootkit || { print_error "Failed to change directory to /usr/local/chkrootkit"; exit 1; }
+    
+    print_progress "Compiling chkrootkit..."
+    sudo make
+    
+    cd || { print_error "Failed to return to home directory"; exit 1; }
+    
+    print_header "Installation on RedHat completed successfully"
+}
+
+# Function to install tools on Debian
+debian() {
+    print_header "Starting installation on Debian"
+
+    cd /tmp || { print_error "Failed to change directory to /tmp"; exit 1; }
+    
+    print_progress "Downloading sa-1.0.0.noarch.rpm..."
+    wget -q https://github.com/KooshaYeganeh/sa/releases/download/v1.0.0/sa-1.0.0.noarch.rpm
+    
+    print_progress "Installing sa-1.0.0.noarch.rpm..."
+    sudo rpm -ivh sa-1.0.0.noarch.rpm
+    
+    print_progress "Installing fail2ban..."
+    sudo apt -y install fail2ban
+    
+    print_progress "Downloading chkrootkit..."
+    wget -q -c ftp://ftp.chkrootkit.org/pub/seg/pac/chkrootkit.tar.gz
+    tar -xzf chkrootkit.tar.gz
+    
+    print_progress "Setting up chkrootkit..."
+    sudo mkdir -p /usr/local/chkrootkit
+    sudo mv chkrootkit-0.58b/* /usr/local/chkrootkit
+    
+    cd /usr/local/chkrootkit || { print_error "Failed to change directory to /usr/local/chkrootkit"; exit 1; }
+    
+    print_progress "Compiling chkrootkit..."
+    sudo make
+    
+    cd || { print_error "Failed to return to home directory"; exit 1; }
+    
+    print_header "Installation on Debian completed successfully"
+}
+
+# Function to display menu and handle installation
+menu() {
+    case "$1" in
+        --install)
+            case "$2" in
+                --suse)
+                    openSUSE
+                    ;;
+                --redhat)
+                    redhat
+                    ;;
+                --debian)
+                    debian
+                    ;;
+                *)
+                    print_error "Invalid option for install. Please use --suse, --redhat, or --debian."
+                    ;;
+            esac
+            ;;
+        *)
+            print_error "Usage: $0 --install [--suse | --redhat | --debian]"
+            ;;
+    esac
+}
+
+# Call the menu function with script arguments
+menu "$@"
