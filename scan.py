@@ -17,6 +17,11 @@ def print_footer(message, success=True):
         print(Fore.RED + Style.BRIGHT + message)
     print()
 
+
+
+
+
+
 def dir_clamav(scan_path):
     print_header(f"Scanning Directory with ClamAV: {scan_path}")
     scan_command = f"sudo clamscan --remove --recursive --infected {scan_path}"

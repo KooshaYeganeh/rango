@@ -8,6 +8,7 @@ import manual
 import checkport
 import checkservice
 import subprocess
+import fail2ban
 
 def main():
     if len(sys.argv) < 2:
@@ -38,6 +39,7 @@ def main():
             print("Error: Scan type is required for --scan")
             sys.exit(1)
         scan_type = sys.argv[2]
+        scan_name = sys.argv[3]
         if scan_type == "--full" or scan_type == "-F":
             scan.full_clamav()
         elif scan_type == "--dir" or scan_type == "-D":
@@ -49,7 +51,14 @@ def main():
         elif scan_type == "--rootkit" or scan_type == "-RK":
             scan.rkhunter()
         elif scan_type == "--vul" or scan_type == "-VUL":
-            scan.vul_check()
+            if len(sys.argv) < 4:
+                print("Error: Scan name is required for --scan --vul")
+                sys.exit(1)
+            scan_name = sys.argv[3]
+            if scan_name == "--fail2ban" or scan_name == "-FB":
+                fail2ban.check_fail2ban_logs()
+            else:
+                scan.vul_check()
         else:
             print("Invalid scan type.")
             sys.exit(1)
