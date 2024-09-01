@@ -1,7 +1,6 @@
 import os
-import sys
 import subprocess
-from colorama import Fore, Back, Style, init
+from colorama import Fore, Style, init
 
 # Initialize Colorama
 init(autoreset=True)
@@ -26,14 +25,21 @@ def dir_clamav(scan_path):
     print_footer("ClamAV Scan Completed [ OK ]")
 
 def rkhunter():
-    print_header("Starting System Scan with RootKitHunter")
-    result = subprocess.run(['sudo', 'rkhunter', '--check'], capture_output=True, text=True)
-    print(result.stdout)
+    print_header("Starting System Scan with RootKitHunter and chkrootkit")
     
-    if result.returncode == 0:
-        print_footer("System Scanned with RootKitHunter [ OK ]")
+    # Run rkhunter
+    rkhunter_result = subprocess.run(['sudo', 'rkhunter', '--check', '--skip-keypress'], capture_output=True, text=True)
+    print(rkhunter_result.stdout)
+    
+    # Run chkrootkit
+    chkrootkit_result = subprocess.run(['sudo', 'chkrootkit'], capture_output=True, text=True)
+    print(chkrootkit_result.stdout)
+    
+    # Evaluate results
+    if "No malware detected" in rkhunter_result.stdout and chkrootkit_result.returncode == 0:
+        print_footer("System Scanned with RootKitHunter and chkrootkit [ OK ]")
     else:
-        print_footer("RootKit Scan System [ ERROR ]", success=False)
+        print_footer("RootKitHunter or chkrootkit Detected Issues [ ERROR ]", success=False)
 
 def vul_check():
     print_header("Checking System Vulnerabilities with Lynis")
@@ -45,20 +51,23 @@ def vul_check():
 def full_clamav():
     print_header("Performing Full System Scan")
     
-    clamascan_command = "sudo clamscan --remove --infected --recursive /"
-    rkhunter_command = "sudo rkhunter -c"
-    
+    # Run ClamAV scan
     print_header("ClamAV Scan in Progress")
+    clamascan_command = "sudo clamscan --remove --infected --recursive /"
     clamascan = os.popen(clamascan_command).read()
     print(clamascan)
     
+    print_header("maldet in Progress")
+    maldet_command = "sudo maldet -a"
+    maldet = os.popen(maldet_command).read()
+    print(maldet)
+    # Run RootKitHunter scan
     print_header("RootKitHunter Scan in Progress")
-    rkhunter = os.popen(rkhunter_command).read()
-    print(rkhunter)
+    rkhunter()
     
+    # Run Lynis vulnerability check
     print_header("Checking Vulnerabilities")
-    print(vul_check())
+    vul_check()
     
     print_footer("Full System Scan Completed [ OK ]")
-
 
