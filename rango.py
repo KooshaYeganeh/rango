@@ -17,7 +17,7 @@ def main():
 
     command = sys.argv[1]
 
-    if command == "--encrypt" or command == "-E":
+    if command in ["--encrypt", "-E"]:
         if len(sys.argv) < 3:
             print("Error: Directory path is required for --encrypt")
             sys.exit(1)
@@ -26,7 +26,7 @@ def main():
         encrypt.encrypt_files_in_directory(directory, encrypt.key)
         print("All Files Encrypted [ OK ]")
 
-    elif command == "--sort" or command == "-S":
+    elif command in ["--sort", "-S"]:
         if len(sys.argv) < 3:
             print("Error: Directory path is required for --sort")
             sys.exit(1)
@@ -34,45 +34,43 @@ def main():
         sort.sort_files(directory)
         print("Files Sorted [ OK ]")
 
-    elif command == "--scan" or command == "-SS":
+    elif command in ["--scan", "-SS"]:
         if len(sys.argv) < 3:
             print("Error: Scan type is required for --scan")
             sys.exit(1)
         scan_type = sys.argv[2]
-        scan_name = sys.argv[3]
-        if scan_type == "--full" or scan_type == "-F":
+
+        if scan_type in ["--full", "-F"]:
             scan.full_clamav()
-        elif scan_type == "--dir" or scan_type == "-D":
+
+        elif scan_type in ["--dir", "-D"]:
             if len(sys.argv) < 4:
                 print("Error: Directory path is required for --scan --dir")
                 sys.exit(1)
             directory = sys.argv[3]
             scan.dir_clamav(directory)
-        elif scan_type == "--rootkit" or scan_type == "-RK":
+
+        elif scan_type in ["--rootkit", "-RK"]:
             scan.rkhunter()
-        elif scan_type == "--vul" or scan_type == "-VUL":
-            if len(sys.argv) < 4:
-                print("Error: Scan name is required for --scan --vul")
-                sys.exit(1)
-            scan_name = sys.argv[3]
-            if scan_name == "--fail2ban" or scan_name == "-FB":
+
+        elif scan_type in ["--vul", "-VUL"]:
+            scan.vul_check()    
+        elif scan_type in ["--fail2ban", "-FB"]:
                 fail2ban.check_fail2ban_logs()
-            else:
-                scan.vul_check()
         else:
             print("Invalid scan type.")
             sys.exit(1)
 
-    elif command == "--firewall" or command == "-FW":
+    elif command in ["--firewall", "-FW"]:
         if len(sys.argv) < 3:
             print("Error: Firewall action is required for --firewall")
             sys.exit(1)
         firewall_action = sys.argv[2]
-        if firewall_action == "--webserver" or firewall_action == "-WB":
+        if firewall_action in ["--webserver", "-WB"]:
             firewall.set_webserver_firewall()
-        elif firewall_action == "--show" or firewall_action == "-SH":
+        elif firewall_action in ["--show", "-SH"]:
             firewall.show_firewall_config()
-        elif firewall_action == "--add" or firewall_action == "-A":
+        elif firewall_action in ["--add", "-A"]:
             if len(sys.argv) < 4:
                 print("Error: Firewall rule is required for --add")
                 sys.exit(1)
@@ -82,12 +80,12 @@ def main():
             print("Invalid firewall action.")
             sys.exit(1)
 
-    elif command == "--checkport" or command == "-CP":
+    elif command in ["--checkport", "-CP"]:
         if len(sys.argv) < 3:
             print("Error: Checkport action is required for --checkport")
             sys.exit(1)
         port_action = sys.argv[2]
-        if port_action == "--result" or port_action == "-R":
+        if port_action in ["--result", "-R"]:
             checkport.show_port()
         else:
             print("Invalid checkport action.")
@@ -102,24 +100,17 @@ def main():
             checkservice.service()
         elif service_action == "--report":
             checkservice.service_report()
-        elif service_action == "--start":
+        elif service_action in ["--start", "--stop", "--restart"]:
             if len(sys.argv) < 4:
-                print("Error: Service name is required for --service --start")
+                print(f"Error: Service name is required for --service {service_action}")
                 sys.exit(1)
             service_name = sys.argv[3]
-            checkservice.start_service(service_name)
-        elif service_action == "--stop":
-            if len(sys.argv) < 4:
-                print("Error: Service name is required for --service --stop")
-                sys.exit(1)
-            service_name = sys.argv[3]
-            checkservice.stop_service(service_name)
-        elif service_action == "--restart":
-            if len(sys.argv) < 4:
-                print("Error: Service name is required for --service --restart")
-                sys.exit(1)
-            service_name = sys.argv[3]
-            checkservice.restart(service_name)
+            if service_action == "--start":
+                checkservice.start_service(service_name)
+            elif service_action == "--stop":
+                checkservice.stop_service(service_name)
+            elif service_action == "--restart":
+                checkservice.restart(service_name)
         else:
             print("Invalid service action.")
             sys.exit(1)
@@ -130,29 +121,29 @@ def main():
             sys.exit(1)
         monitor_action = sys.argv[2]
         if monitor_action == "--system":
-            print("\n\nEnter command glances to Monitor system :)")
-            print("➜ command : glances")
+            subprocess.run(["glances"])
+            
         else:
             print("Invalid monitor action.")
             sys.exit(1)
 
-    elif command == "--help" or command == "-H":
+    elif command in ["--help", "-H"]:
         manual.help()
         if len(sys.argv) > 2:
             help_command = sys.argv[2]
-            if help_command == "--scan" or help_command == "-SS":
+            if help_command in ["--scan", "-SS"]:
                 manual.scan_help()
-            elif help_command == "--encrypt" or help_command == "-E":
+            elif help_command in ["--encrypt", "-E"]:
                 manual.encrypt_help()
-            elif help_command == "--sort" or help_command == "-S":
+            elif help_command in ["--sort", "-S"]:
                 manual.sort_help()
-            elif help_command == "--firewall" or help_command == "-FW":
+            elif help_command in ["--firewall", "-FW"]:
                 manual.firewall_help()
             elif help_command == "--service":
                 manual.service_help()
             elif help_command == "--port":
                 manual.port_help()
-            elif help_command == "--all" or help_command == "-A":
+            elif help_command in ["--all", "-A"]:
                 manual.all()
             else:
                 print("Invalid help command.")
@@ -167,4 +158,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
