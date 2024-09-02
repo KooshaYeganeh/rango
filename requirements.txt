@@ -2,7 +2,12 @@ altgraph==0.17.4
 cffi==1.16.0
 colorama==0.4.6
 cryptography==42.0.8
+defusedxml==0.7.1
+Glances==4.1.2
+orjson==3.10.7
 packaging==24.1
+psutil==6.0.0
 pycparser==2.22
 pyinstaller==6.8.0
 pyinstaller-hooks-contrib==2024.7
+termgraph==0.5.3
