@@ -68,10 +68,11 @@ Rango is a modular Data Loss Prevention (DLP) tool designed for Linux systems, o
 
 - 🔒 **Encrypt Files**: Secure your files by encrypting them.
 - 📁 **Sort Files**: Organize files by their extension.
-- 🛡️ **Scan System**: Perform comprehensive security scans with ClamAV, RKHunter, and Lynis.
+- 🛡️ **Scan System**: Perform comprehensive security scans with ClamAV, RKHunter, chkrootkit and Lynis.
 - 🔥 **Manage Firewall**: Configure firewall rules and check existing configurations.
 - 🌐 **Check Ports**: Identify open ports on the system.
-- ⚙️ **Manage Services**: List, start, stop, and restart system services.
+- ⚙️ **Manage Services**: List, report, start, stop, and restart system services.
+- 🔥 **check Fail2ban Logs**
 
 ## Table of Contents
 
